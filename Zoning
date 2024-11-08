@@ -1,0 +1,19 @@
+import geopandas as gpd
+
+# Load the parcel shapefile
+parcels = gpd.read_file("path_to_parcels_shapefile.shp")
+
+# Define the filter criteria
+MINIMUM_LOT_SIZE = 25000  # in square feet
+DESIRED_ZONING_TYPES = ["Residential", "Commercial", "Mixed-Use"]
+
+# Filter parcels based on lot size and zoning type
+filtered_parcels = parcels[
+    (parcels['area'] >= MINIMUM_LOT_SIZE) &
+    (parcels['zoning_type'].isin(DESIRED_ZONING_TYPES))
+]
+
+# Save the filtered parcels to a new shapefile
+filtered_parcels.to_file("filtered_buildable_parcels.shp")
+
+print("Filtered parcels saved to 'filtered_buildable_parcels.shp'")
